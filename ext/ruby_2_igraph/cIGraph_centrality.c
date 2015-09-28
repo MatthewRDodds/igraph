@@ -2,47 +2,48 @@
 #include "ruby.h"
 #include "cIGraph.h"
 
-/* call-seq:
- *   graph.closeness(vs,mode) -> Array
- *
- * Returns an Array of closeness centrality measures for the vertices given in
- * the vs Array. mode defines the type of shortest paths used for the 
- * calculation
- */
-VALUE cIGraph_closeness(VALUE self, VALUE vs, VALUE mode){
+// /* call-seq:
+//  *   graph.closeness(vs,mode) -> Array
+//  *
+//  * Returns an Array of closeness centrality measures for the vertices given in
+//  * the vs Array. mode defines the type of shortest paths used for the 
+//  * calculation
+//  */
+// VALUE cIGraph_closeness(VALUE self, VALUE vs, VALUE mode){
 
-  igraph_t *graph;
-  igraph_vs_t vids;
-  igraph_vector_t vidv;
-  igraph_neimode_t pmode = NUM2INT(mode);
-  igraph_vector_t res;
-  int i;
-  VALUE closeness = rb_ary_new();
+//   igraph_t *graph;
+//   igraph_vs_t vids;
+//   igraph_vector_t vidv;
+//   igraph_neimode_t pmode = NUM2INT(mode);
+//   igraph_vector_t res;
+//   int i;
+//   VALUE closeness = rb_ary_new();
 
-  //vector to hold the results of the degree calculations
-  igraph_vector_init_int(&res,0);
+//   //vector to hold the results of the degree calculations
+//   igraph_vector_init_int(&res,0);
 
-  Data_Get_Struct(self, igraph_t, graph);
+//   Data_Get_Struct(self, igraph_t, graph);
 
-  //Convert an array of vertices to a vector of vertex ids
-  igraph_vector_init_int(&vidv,0);
-  cIGraph_vertex_arr_to_id_vec(self,vs,&vidv);
-  //create vertex selector from the vecotr of ids
-  igraph_vs_vector(&vids,&vidv);
+//   //Convert an array of vertices to a vector of vertex ids
+//   igraph_vector_init_int(&vidv,0);
+//   cIGraph_vertex_arr_to_id_vec(self,vs,&vidv);
+//   //create vertex selector from the vecotr of ids
+//   igraph_vs_vector(&vids,&vidv);
 
-  igraph_closeness(graph,&res,vids,pmode);
+//   // TODO: Arguments were modified here.
+//   igraph_closeness(graph,&res,vids,pmode,NULL,0);
 
-  for(i=0;i<igraph_vector_size(&res);i++){
-    rb_ary_push(closeness,rb_float_new(VECTOR(res)[i]));
-  }
+//   for(i=0;i<igraph_vector_size(&res);i++){
+//     rb_ary_push(closeness,rb_float_new(VECTOR(res)[i]));
+//   }
 
-  igraph_vector_destroy(&vidv);
-  igraph_vector_destroy(&res);
-  igraph_vs_destroy(&vids);
+//   igraph_vector_destroy(&vidv);
+//   igraph_vector_destroy(&res);
+//   igraph_vs_destroy(&vids);
 
-  return closeness;
+//   return closeness;
 
-}
+// }
 
 /* call-seq:
  *   graph.betweenness(vs,mode) -> Array
@@ -79,7 +80,10 @@ VALUE cIGraph_betweenness(VALUE self, VALUE vs, VALUE directed){
   //create vertex selector from the vecotr of ids
   IGRAPH_CHECK(igraph_vs_vector(&vids,&vidv));
 
-  IGRAPH_CHECK(igraph_betweenness(graph,&res,vids,dir));
+  // TODO: These arguments have been edited
+  IGRAPH_CHECK(igraph_betweenness(graph,&res,vids,dir,
+    /*weights=*/ 0, /*nobigint=*/ 1)
+  );
 
   for(i=0;i<igraph_vector_size(&res);i++){
     rb_ary_push(betweenness,rb_float_new((float)VECTOR(res)[i]));
@@ -118,7 +122,8 @@ VALUE cIGraph_edge_betweenness(VALUE self, VALUE directed){
 
   Data_Get_Struct(self, igraph_t, graph);
 
-  igraph_edge_betweenness(graph,&res,dir);
+  igraph_edge_betweenness(graph,&res,dir,
+    /*weights=*/ 0);
 
   for(i=0;i<igraph_vector_size(&res);i++){
     rb_ary_push(betweenness,INT2NUM((int)VECTOR(res)[i]));

@@ -1,6 +1,21 @@
 # Ruby2Igraph
 
-TODO: Write a gem description
+Attempting port of [igraph c extension for ruby](https://github.com/alexgutteridge/igraph) to work with newer version of igraph as well as Ruby version 2.2.0.
+
+## Prerequisites
+
+### Install Igraph library
+
+From gem folder:
+```bash
+script/install_igraph.sh
+```
+
+From app (or other)
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/MatthewRDodds/ruby_2_igraph/master/script/install_igraph)"
+```
 
 ## Installation
 
@@ -20,7 +35,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+See [https://github.com/alexgutteridge/igraph/blob/master/README.txt](https://github.com/alexgutteridge/igraph/blob/master/README.txt)
 
 ## Contributing
 

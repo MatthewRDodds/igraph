@@ -1,0 +1,31 @@
+#!/bin/bash
+
+printf "\npreparing for install\n"
+
+brew update
+
+printf "\ninstalling libraries with brew\n"
+
+brew install cairo
+
+printf "\ninstalling igraph\n"
+
+brew tap homebrew/science
+
+brew install igraph
+
+# brew install wget
+# brew install gcc
+# brew install llvm --with-clang
+
+# printf "\downloading igraph\n"
+
+# wget --no-check-certificate https://github.com/igraph/igraph/archive/0.7.1.tar.gz
+# tar xzf 0.7.1.tar.gz
+# rm 0.7.1.tar.gz
+
+# printf "\ninstalling igraph\n"
+
+# cd igraph-0.7.1
+
+# ./configure && make && sudo make install
