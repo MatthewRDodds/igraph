@@ -4,6 +4,17 @@
 VALUE cIGraph;
 VALUE cIGraphError;
 
+void cIGraph_free(void *p){
+  igraph_destroy(p);
+  free(p);
+}
+
+void cIGraph_mark(void *p){
+  rb_gc_mark(((VALUE*)((igraph_t*)p)->attr)[0]);
+  rb_gc_mark(((VALUE*)((igraph_t*)p)->attr)[1]);
+  rb_gc_mark(((VALUE*)((igraph_t*)p)->attr)[2]);
+}
+
 VALUE cIGraph_alloc(VALUE klass){
 
   igraph_t *graph = malloc(sizeof(igraph_t));
