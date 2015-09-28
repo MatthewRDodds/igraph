@@ -1,4 +1,4 @@
-#include <stree.h>
+#include <igraph.h>
 
 //Classes
 VALUE cIGraph;
