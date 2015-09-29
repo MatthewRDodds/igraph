@@ -3,8 +3,7 @@
 
 #include <ruby.h>
 #include <math.h>
-#include <igraph.h>
-#include <igraph/centrality.h>
+#include <igraph/igraph_centrality.h>
 
 extern VALUE cIGraph;
 extern VALUE cIGraphError;

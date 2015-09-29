@@ -31,10 +31,10 @@ LIB_DIRS = [
   '/usr/lib',
 ]
 
-# dir_config('igraph', HEADER_DIRS, LIB_DIRS)
-stree_dirs = dir_config('igraph', '/opt/local/include', '/opt/local/lib')
+dir_config('igraph', HEADER_DIRS, LIB_DIRS)
+# dir_config('igraph', '/usr/local/include', '/usr/local/lib')
 
-unless find_header('igraph/igraph.h', *HEADER_DIRS)
+unless find_header('igraph/igraph_centrality.h', *HEADER_DIRS)
   abort "\nERROR: Cannot find the iGraph header, please install iGraph."
 end
 
@@ -42,4 +42,4 @@ unless find_library('igraph', 'igraph_betweenness', *LIB_DIRS)
   abort "\nERROR: Cannot find the iGraph library, please install iGraph."
 end
 
-create_makefile('igraph')
+create_makefile('igraph/igraph')
